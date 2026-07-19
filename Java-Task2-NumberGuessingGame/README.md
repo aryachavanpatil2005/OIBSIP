@@ -1,13 +1,14 @@
-# Number Guessing Game
+# ATM Interface
 
 ## Description
-This is a Java console-based Number Guessing Game developed for the Oasis Infobyte Java Development Internship.
+This is a Java console-based ATM Interface developed for the Oasis Infobyte Java Development Internship.
 
 ## Features
-- Random number generation (1-100)
-- Maximum 7 attempts
-- Too High / Too Low hints
-- Play Again option
+- Check Balance
+- Deposit Money
+- Withdraw Money
+- Transaction History
+- Exit
 
 ## Technologies Used
 - Java

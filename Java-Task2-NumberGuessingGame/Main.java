@@ -1,4 +1,3 @@
-import java.util.Random;
 import java.util.Scanner;
 
 public class Main {
@@ -6,54 +5,60 @@ public class Main {
     public static void main(String[] args) {
 
         Scanner sc = new Scanner(System.in);
-        Random random = new Random();
 
-        char playAgain;
+        Account account = new Account("Arya", 10000);
+        ATM atm = new ATM(account);
+        Transaction transaction = new Transaction();
+        Bank bank = new Bank(atm, transaction);
+
+        int choice;
 
         do {
-            int number = random.nextInt(100) + 1;
-            int guess;
-            int attempts = 0;
-            int maxAttempts = 7;
+            System.out.println("\n========== ATM INTERFACE ==========");
+            System.out.println("1. Check Balance");
+            System.out.println("2. Deposit");
+            System.out.println("3. Withdraw");
+            System.out.println("4. Transaction History");
+            System.out.println("5. Exit");
+            System.out.print("Enter your choice: ");
 
-            System.out.println("================================");
-            System.out.println("      NUMBER GUESSING GAME");
-            System.out.println("================================");
-            System.out.println("Guess a number between 1 and 100");
-            System.out.println("You have only 7 attempts.");
+            choice = sc.nextInt();
 
-            while (attempts < maxAttempts) {
+            switch (choice) {
 
-                System.out.print("Enter your guess: ");
-                guess = sc.nextInt();
-                attempts++;
-
-                if (guess == number) {
-                    System.out.println(" Congratulations!");
-                    System.out.println("You guessed the correct number.");
-                    System.out.println("Attempts Used: " + attempts);
+                case 1:
+                    bank.getATM().checkBalance();
+                    transaction.addTransaction("Checked Balance");
                     break;
-                } else if (guess < number) {
-                    System.out.println(" Too Low!");
-                } else {
-                    System.out.println(" Too High!");
-                }
 
-                System.out.println("Attempts Left: " + (maxAttempts - attempts));
+                case 2:
+                    System.out.print("Enter Amount: ");
+                    double deposit = sc.nextDouble();
+                    bank.getATM().deposit(deposit);
+                    transaction.addTransaction("Deposited ₹" + deposit);
+                    break;
+
+                case 3:
+                    System.out.print("Enter Amount: ");
+                    double withdraw = sc.nextDouble();
+                    bank.getATM().withdraw(withdraw);
+                    transaction.addTransaction("Withdraw ₹" + withdraw);
+                    break;
+
+                case 4:
+                    transaction.showHistory();
+                    break;
+
+                case 5:
+                    System.out.println("Thank You for Using ATM.");
+                    break;
+
+                default:
+                    System.out.println("Invalid Choice.");
             }
 
-            if (attempts == maxAttempts) {
-                System.out.println("--------------------------------");
-                System.out.println(" Game Over!");
-                System.out.println("Correct Number was: " + number);
-            }
+        } while (choice != 5);
 
-            System.out.print("Play Again? (Y/N): ");
-            playAgain = sc.next().charAt(0);
-
-        } while (playAgain == 'Y' || playAgain == 'y');
-
-        System.out.println("Thank You for Playing!");
         sc.close();
     }
 }
